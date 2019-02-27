@@ -24,3 +24,8 @@
 <div align="center">
     <img alt="ForceDirectedGraph" src="https://raw.githubusercontent.com/wond-z/Pic/master/ForceDirectedGraph.png">
 </div>
+
+### ForceDirectedGraphByLegend<sup><font size="1">[Custom]</font></sup>
+<div align="center">
+    <img alt="ForceDirectedGraphByLegend" src="https://raw.githubusercontent.com/wond-z/Pic/master/ForceDirectedGraphByLegend.png">
+</div>
