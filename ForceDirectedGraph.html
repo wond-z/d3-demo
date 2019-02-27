@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>代码片</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<style>
+			* { margin: 0; padding: 0;}
+			/*html,body,div { height: 100%;}
+			.row { display: table;}
+			.col-md-6 { display: table-cell; height: 100%;};*/
+		</style>
+		<style type="text/css">  
+			path.link { fill: none; stroke: #666; stroke-width: 1.5px;}
+			marker#licensing {fill: green;}
+			path.link.licensing {stroke: green;}
+			path.link.resolved {stroke-dasharray: 0,2 1;}
+			circle {fill: #ccc;stroke: #333;stroke-width: 1.5px;}
+			text {font: 10px sans-serif;pointer-events: none;}
+			text.shadow { stroke: #fff; stroke-width: 3px; stroke-opacity: .8;}
+			text.color { fill: red;}
+		</style>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<!--<div class="col-md-6" style="background: #ccc;">
+					it space
+					<br />it space
+					<br />it space
+					<br />it space<br />it space<br />it space<br />it space
+					<br />it space<br />it space<br />it space<br />it space<br />it space
+					<br />it space<br />it space<br />it space<br />it space
+					<br />it space<br />it space<br />it space<br />it space<br />it space<br />it space
+					<br />it space<br />it space<br />it space<br />it space<br />it space<br />it space<br />it space<br />it space
+				</div>-->
+				<div class="col-md-8 col-md-offset-2" id="force" style=" height: 800px; padding-left: 0;"></div>
+				<script>
+//					var nodes = [
+//						{ name: "故障诊断"  },{ name: "网络"  },{ name: "遗传算法"  },{ name: "剩余油"  },       
+//						{ name: "启动压力梯度"  }, 
+//						{ name: "数据仓库"  },     
+//						{ name: "GPRS"  },         
+//						{ name: "孔隙度"  },       
+//						{ name: "单片机"  },       
+//						{ name: "地震属性"  },     
+//						{ name: "示功图"  },       
+//						{ name: "剩余油分布"  },  
+//						{ name: "信息管理"  },     
+//						{ name: "塔河油田"  },     
+//						{ name: "节能"  },         
+//						{ name:"抽油机井"  },    
+//						{ name: "测井曲线"  },    
+//						{ name: "安全"  },         
+//						{ name: "计量"  },         
+//						{ name: "信息"  },         
+//						{ name: "低渗透"  },      
+//						{ name: "自动控制"  },    
+//						{ name: "PLC"  },         
+//						{ name: "神经网络算法"  }, 
+//						{ name: "数据库"  },       
+//						{ name: "数值模拟"  },     
+//						{ name: "低渗透油藏"  },   
+//						{ name: "数据挖掘"  },     
+//						{ name: "数据采集" },     
+//						{ name: "渗透率"  },       
+//						{ name: "数据采集"  },     
+//						{ name: "储层预测"  },     
+//						{ name: "数值模拟"  },    
+//						{ name: "碳酸盐岩" },     
+//						{ name: "抽油机"  },       
+//						{ name: "示功图"  },      
+//						{ name: "神经网络算法"  },
+//						{ name: "数据"  },         
+//						{ name: "天然气"  },       
+//						{ name: "油田"  },         
+//						{ name: "启动压力梯度"  },
+//						{ name: "数据采集"  },    
+//						{ name: "管理"}
+//					];
+//					//数字代表nodes的序号，nodes数据共43个（0-42），edges数据共28个;需保证source和target的值不能大于nodes数
+//					var edges = [   { source : 0 , target: 41, type: "suit" } ,{ source : 0 , target: 41, type: "suit" } ,
+//									{ source : 0 , target: 4, type: "suit" } ,{ source : 0 , target: 4, type: "suit" } ,
+//									{ source : 0  , target: 33 }, { source : 0  , target: 34 }, { source : 0  , target: 42 }, 
+//									{ source : 0  , target: 28 }, { source : 0 , target: 29 }, { source : 0  , target: 28 }, 
+//									{ source : 0  , target: 36 }, { source : 0  , target: 37}, { source : 0  , target: 38 }, 
+//									{ source : 0  , target: 39 }, { source : 0  , target: 40 } , { source : 0  , target: 41 }, 
+//									{ source : 0  , target: 33 }, { source : 0  , target: 34 }, { source : 0  , target: 10 }, 
+//									{ source : 0 , target: 36 }, { source : 0  , target: 37 }, { source : 0 , target: 38 }, 
+//									{ source : 0 , target: 39}, { source : 0  , target: 40 }, { source : 0  , target: 41 }, 
+//									{ source : 0  , target: 41 }, { source : 0  , target: 1 }, { source : 0  , target: 24 }, 
+//									{ source : 0  , target: 42 }
+//					];
+					
+					var links = [
+						{source: "Microsoft", target: "Amazon", type: "licensing"},
+					  	{source: "Microsoft", target: "HTC", type: "licensing"},
+					  	{source: "Samsung", target: "Apple", type: "suit"},
+					 	{source: "Motorola", target: "Apple", type: "suit"},
+					  	{source: "Nokia", target: "Apple", type: "resolved"},
+						{source: "HTC", target: "Apple", type: "suit"},
+						{source: "Kodak", target: "Apple", type: "suit"},
+					  	{source: "Microsoft", target: "Barnes & Noble", type: "suit"},
+					  	{source: "Microsoft", target: "Foxconn", type: "suit"},
+					  	{source: "Oracle", target: "Google", type: "suit"},
+					  	{source: "Apple", target: "HTC", type: "suit"},
+						{source: "Microsoft", target: "Inventec", type: "suit"},
+					  	{source: "Samsung", target: "Kodak", type: "resolved"},
+						{source: "LG", target: "Kodak", type: "resolved"},
+					  	{source: "RIM", target: "Kodak", type: "suit"},
+					  	{source: "Sony", target: "LG", type: "suit"},
+					  	{source: "Kodak", target: "LG", type: "resolved"},
+					  	{source: "Apple", target: "Nokia", type: "resolved"},
+					  	{source: "Qualcomm", target: "Nokia", type: "resolved"},
+						{source: "Apple", target: "Motorola", type: "suit"},
+					  	{source: "Microsoft", target: "Motorola", type: "suit"},
+					  	{source: "Motorola", target: "Microsoft", type: "suit"},
+					  	{source: "Huawei", target: "ZTE", type: "suit"},
+					  	{source: "Ericsson", target: "ZTE", type: "suit"},
+					  	{source: "Kodak", target: "Samsung", type: "resolved"},
+					  	{source: "Apple", target: "Samsung", type: "suit"},
+					  	{source: "Kodak", target: "RIM", type: "suit"},
+					  	{source: "Nokia", target: "Qualcomm", type: "suit"}
+					];
+					
+					var nodes = {};
+					
+					links.forEach(function(link) {
+					  link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+					  link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+					});
+					
+					function getStyle(obj, attr) {
+						if(obj.currentStyle) {
+							return obj.currentStyle[attr];
+						} else {
+								return getComputedStyle(obj, false)[attr];
+						}
+					}
+					var oDiv=document.getElementById('force');
+					var width_px = getStyle(oDiv, 'width');
+					var width_str = width_px.toString();
+					var width_sub =	width_str.substr(0,4);
+					var width = parseInt(width_sub);
+					var height = 800;
+
+					var svg = d3.select("#force")
+								.append("svg")
+								.attr("width",width)
+								.attr("height",height);
+
+					var force = d3.layout.force()
+							.nodes(d3.values(nodes))		//指定节点数组
+							.links(links)					//指定连线数组
+							.size([width,height])			//指定范围
+							.linkDistance(150)				//指定连线长度
+							.charge([-400])					//相互之间的作用力
+							.on("tick", tick)
+							.start();						//开始作用
+			
+//					console.log(nodes);
+//					console.log(edges);
+
+					//(1)创建三种连线的标记
+					svg.append("defs").selectAll("marker")
+					    .data(["suit", "licensing", "resolved"])
+						.enter()								//返回缺失元素的占位对象（placeholder），指向绑定的数据中比选定元素集多出的一部分元素
+						.append("marker")					//创建并添加新元素到选定元素后
+					    .attr("id", String)
+					    .attr("viewBox", "0 -5 10 10")
+					    .attr("refX", 30)						//箭头横向坐标
+					    .attr("refY", -3)						//箭头纵向坐标
+					    .attr("markerWidth", 6)
+					    .attr("markerHeight", 6)
+					    .attr("orient", "auto")
+						.append("path")
+					    .attr("d", "M0,-5L10,0L0,5");
+
+					//(2)根据连线类型引用上面创建的标记
+					var path = svg.append("g").selectAll("path")
+					    .data(force.links())
+						.enter().append("path")
+					    .attr("class", function(d) { return "link " + d.type; })
+					    .attr("marker-end", function(d) { return "url(#" + d.type + ")"; });
+					
+					var color = d3.scale.category20();
+					
+					var node = svg.append("g").selectAll("node")
+					    .data(force.nodes())
+						.enter()
+						.append("circle")
+					    .attr("r", 20)
+						.call(force.drag)			//使得节点可拖动
+					    .style("fill",function(d,i){ return color(i); });
+					
+					var text = svg.append("g")
+						.selectAll("g")
+					    .data(force.nodes())
+						.enter()
+						.append("g");
+					
+					//文字底色
+					text.append("text")
+					    .attr("x", 20)
+					    .attr("y", ".31em")
+					    .attr("class", "shadow")
+					    .text(function(d) { return d.name; });
+					
+					//文字颜色
+					text.append("text")
+					    .attr("x", 20)
+					    .attr("y", ".31em")
+					    .attr("class","color")
+					    .text(function(d) { return d.name; });
+			
+					//添加描述节点的文字
+					var svg_texts = svg.selectAll("text")
+						.data(nodes)
+						.enter()
+						.append("text")
+						.style("fill", "red")
+						.attr("dx", 20)
+						.attr("dy", 8)
+						.text(function(d){ return d.name; });
+								
+			
+//					force.on("tick", function(){	//对于每一个时间间隔
+//					
+//						 //更新连线坐标
+//						 svg_edges.attr("x1",function(d){ return d.source.x; })
+//						 		.attr("y1",function(d){ return d.source.y; })
+//						 		.attr("x2",function(d){ return d.target.x; })
+//						 		.attr("y2",function(d){ return d.target.y; });
+//						 
+//						 //更新节点坐标
+//						 svg_nodes.attr("cx",function(d){ return d.x; })
+//						 		.attr("cy",function(d){ return d.y; });
+//			
+//						 //更新文字坐标
+//						 svg_texts.attr("x", function(d){ return d.x; })
+//						 	.attr("y", function(d){ return d.y; });
+//					});
+
+
+
+					function tick() {
+					//(3)打点path格式是：Msource.x,source.yArr00,1target.x,target.y
+					  path.attr("d", function(d) {
+					    var dx = d.target.x - d.source.x,//增量
+					        dy = d.target.y - d.source.y,
+					        dr = Math.sqrt(dx * dx + dy * dy);
+					    return "M" + d.source.x + "," 
+					    + d.source.y + "A" + dr + "," 
+					    + dr + " 0 0,1 " + d.target.x + "," 
+					    + d.target.y;
+					  });
+					
+					  node.attr("transform", function(d) {
+					    return "translate(" + d.x + "," + d.y + ")";
+					  });
+					
+					  text.attr("transform", function(d) {
+					    return "translate(" + d.x + "," + d.y + ")";
+					  });
+					}
+			    </script>
+				
+			</div>
+			
+		</div>
+	</body>
+</html>
