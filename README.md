@@ -10,9 +10,9 @@
     <img alt="RadialForce" src="https://raw.githubusercontent.com/wond-z/Pic/master/RadialForce.png">
 </div>
 
-### relation<sup><font size="1">[Custom]</font></sup>
+### Relationship<sup><font size="1">[Custom]</font></sup>
 <div align="center">
-    <img alt="relation" src="https://raw.githubusercontent.com/wond-z/Pic/master/relation.png">
+    <img alt="Relationship" src="https://raw.githubusercontent.com/wond-z/Pic/master/relation.png">
 </div>
 
 ### treemap<sup><font size="1">[Official]</font></sup>
